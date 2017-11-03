@@ -20,15 +20,14 @@ def get_next_batch(batch_size=128):
 
     for i in range(batch_size):
         text, image = wrap_gen_captcha_text_and_image()
-        #image = convert2gray(image)
 
-        if False:
+
+        if False:#此处改为Ture,用以输出查看训练图片
             image_=Image.fromarray(image)
             image_.save('./test_out/%s.jpg'%text)
             #exit()
 
-        #image=np.array(image)
-        batch_x[i, :] = image.flatten()/255  # (image.flatten()-128)/128  mean为0
+        batch_x[i, :] = image.flatten()/255
         batch_y[i, :] = text2vec(text)
 
     return batch_x, batch_y
