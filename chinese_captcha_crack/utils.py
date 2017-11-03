@@ -14,14 +14,6 @@ def char2pos(c):
     return gen_char_set.index(c)
 
 
-    k = ord(c) - 48
-    if k > 9:
-        k = ord(c) - 55
-        if k > 35:
-            k = ord(c) - 61
-            if k > 61:
-                raise ValueError('No Map')
-    return k
 
 
 def pos2char(char_idx):
@@ -30,24 +22,10 @@ def pos2char(char_idx):
     :param char_idx:
     :return:
     """
-    #
-    # if not isinstance(char_idx, int64):
-    #     raise ValueError('error')
 
     return gen_char_set[char_idx]
 
-    if char_idx < 10:
-        char_code = char_idx + ord('0')
-    elif char_idx < 36:
-        char_code = char_idx - 10 + ord('A')
-    elif char_idx < 62:
-        char_code = char_idx - 36 + ord('a')
-    elif char_idx == 62:
-        char_code = ord('_')
-    else:
-        raise ValueError('error')
 
-    return chr(char_code)
 
 
 def convert2gray(img):
@@ -90,6 +68,3 @@ def vec2text(vec):
     return "".join(text)
 
 
-if __name__ == '__main__':
-    text = 'XD8K'
-    print(text2vec(text))
