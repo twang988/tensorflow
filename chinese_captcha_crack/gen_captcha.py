@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image,ImageFilter
 #from captcha.image import ImageCaptcha  # pip install captcha
-from captcha_modifyed.image import ImageCaptcha
+from captcha_modifyed.image import ImageCaptcha#使用修改过的captcha生成器
 from cfg import MAX_CAPTCHA,IMAGE_HEIGHT, IMAGE_WIDTH, CHAR_SET_LEN
 from cfg import gen_char_set,number,ALPHABET,CH_CHAR
 
