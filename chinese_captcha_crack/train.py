@@ -15,7 +15,7 @@ def train_crack_captcha_cnn():
     """
     global_step = tf.Variable(0, trainable=False)
     output = crack_captcha_cnn()
-    predict = tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN])  # 36行，4列
+    predict = tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN])  
     label = tf.reshape(Y, [-1, MAX_CAPTCHA, CHAR_SET_LEN])
 
     max_idx_p = tf.argmax(predict, 2)  # shape:batch_size,4,nb_cls
@@ -23,10 +23,10 @@ def train_crack_captcha_cnn():
     correct_pred = tf.equal(max_idx_p, max_idx_l)
 
     with tf.name_scope('my_monitor'):
-        loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict, labels=label))#多分类问题
-        #loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=output, labels=Y))#二分类问题
+        loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=predict, labels=label))#最大概率分类
+        #loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=output, labels=Y))#二进制分类
     tf.summary.scalar('my_loss', loss)
-    # 最后一层用来分类的softmax和sigmoid有什么不同？
+
 
     # optimizer 为了加快训练 learning_rate应该开始大，然后慢慢衰
     optimizer = tf.train.AdamOptimizer(learning_rate=0.0003).minimize(loss,global_step=global_step)
