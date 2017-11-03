@@ -21,14 +21,24 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
 
     x = tf.reshape(X, shape=[-1, IMAGE_HEIGHT, IMAGE_WIDTH, 1])
 
-
-    L1_NEU_NUM=32
-    L2_NEU_NUM=64
-    L3_NEU_NUM=128
-    L4_NEU_NUM=256
-    CONV_CORE_SIZE=3
+    #机器好的可以改为
+    #L1_NEU_NUM=256 
+    #L2_NEU_NUM=512
+    #L3_NEU_NUM=1024
+    #L4_NEU_NUM=2048
+    #CONV_CORE_SIZE=5
+    #NEU_LAYER_NUM=4
+    #FULL_LAYER_FEATURE_NUM=8192
+    
+    
+    
+    L1_NEU_NUM=64
+    L2_NEU_NUM=128
+    L3_NEU_NUM=256
+    L4_NEU_NUM=512
+    CONV_CORE_SIZE=5
     NEU_LAYER_NUM=4
-    FULL_LAYER_FEATURE_NUM=4096
+    FULL_LAYER_FEATURE_NUM=1024
     w_c1 = tf.Variable(w_alpha * tf.random_normal([CONV_CORE_SIZE, CONV_CORE_SIZE, 1, L1_NEU_NUM]))
     b_c1 = tf.Variable(b_alpha * tf.random_normal([L1_NEU_NUM]))
     conv1 = tf.nn.relu(tf.nn.bias_add(tf.nn.conv2d(x, w_c1, strides=[1, 1, 1, 1], padding='SAME'), b_c1))
