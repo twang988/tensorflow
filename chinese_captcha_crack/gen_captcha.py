@@ -11,7 +11,7 @@ from cfg import MAX_CAPTCHA,IMAGE_HEIGHT, IMAGE_WIDTH, CHAR_SET_LEN
 from cfg import gen_char_set,number,ALPHABET,CH_CHAR
 
 
-# 验证码一般都无视大小写；验证码长度4个字符
+
 WHITE=0
 WHITE_THRES=0
 def choice_set(if_no_chinese):
@@ -89,42 +89,3 @@ def wrap_gen_captcha_text_and_image():
     return text, image
 
 
-def __gen_and_save_image():
-    """
-    可以批量生成验证图片集，并保存到本地，方便做本地的实验
-    :return:
-    """
-
-    for i in range(50000):
-        text, image = wrap_gen_captcha_text_and_image()
-
-        im = Image.fromarray(image)
-
-        uuid = uuid.uuid1().hex
-        image_name = '__%s__%s.png' % (text, uuid)
-
-        img_root = join(capt.cfg.workspace, 'train')
-        image_file = path.join(img_root, image_name)
-        im.save(image_file)
-
-
-def __demo_show_img():
-    """
-    使用matplotlib来显示生成的图片
-    :return:
-    """
-    text, image = wrap_gen_captcha_text_and_image()
-
-    print("验证码图像channel:", image.shape)  # (60, 160, 3)
-
-    f = plt.figure()
-    ax = f.add_subplot(111)
-    ax.text(0.1, 0.9, text, ha='center', va='center', transform=ax.transAxes)
-    plt.imshow(image)
-
-    plt.show()
-
-
-if __name__ == '__main__':
-    # gen_and_save_image()
-    pass
