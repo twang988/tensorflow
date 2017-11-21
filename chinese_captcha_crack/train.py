@@ -1,6 +1,4 @@
-"""
-参考文章：http://blog.topspeedsnail.com/archives/10858
-"""
+
 import tensorflow as tf
 
 from cfg import MAX_CAPTCHA, CHAR_SET_LEN, tb_log_path, save_model,model_path
