@@ -12,7 +12,7 @@ ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
             'v', 'w', 'x', 'y', 'z']
 
-gen_char_set = number+ ALPHABET +CH_CHAR + ['_'] # 用于生成验证码的数据集
+gen_char_set = number+ ALPHABET +CH_CHAR + ['_'] # 用于生成验证码的数据集,'_'为不定长验证码的占位符
 #gen_char_set=number+ALPHABET+['_']
 # 有先后的顺序的
 
