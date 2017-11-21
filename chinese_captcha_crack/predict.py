@@ -13,13 +13,6 @@ from utils import convert2gray, vec2text
 
 
 def hack_function(sess, predict, captcha_image):
-    """
-    装载完成识别内容后，
-    :param sess:
-    :param predict:
-    :param captcha_image:
-    :return:
-    """
     text_list = sess.run(predict, feed_dict={X: [captcha_image], keep_prob: 1})
 
     text = text_list[0].tolist()
@@ -32,10 +25,6 @@ def hack_function(sess, predict, captcha_image):
 
 
 def batch_hack_captcha():
-    """
-    批量生成验证码，然后再批量进行识别
-    :return:
-    """
 
     # 定义预测计算图
     global_step = tf.Variable(0, trainable=False)
@@ -54,7 +43,6 @@ def batch_hack_captcha():
         right_cnt = 0
         for i in range(task_cnt):
             text, image = wrap_gen_captcha_text_and_image()
-            #image = convert2gray(image)
             image = image.flatten() / 255
             predict_text = hack_function(sess, predict, image)
             if text == predict_text:
@@ -71,12 +59,7 @@ def batch_hack_captcha():
         print('right/total-----', right_cnt, '/', task_cnt)
 
 def test_hack_captcha_training_data(sess,output):
-    """
-    批量生成验证码，然后再批量进行识别
-    :return:
-    """
 
-    # 定义预测计算图
     predict = tf.argmax(tf.reshape(output, [-1, MAX_CAPTCHA, CHAR_SET_LEN]), 2)
     stime = time.time()
 
