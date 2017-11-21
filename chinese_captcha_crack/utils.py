@@ -17,11 +17,7 @@ def pos2char(char_idx):
 
 
 def convert2gray(img):
-    """
-    把彩色图像转为灰度图像（色彩对识别验证码没有什么用）
-    :param img:
-    :return:
-    """
+
     img=Image.fromarray(img)
     img=img.convert('L')
     img=np.array(img)
