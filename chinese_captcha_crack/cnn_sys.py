@@ -9,35 +9,17 @@ X = tf.placeholder(tf.float32, [None, IMAGE_HEIGHT * IMAGE_WIDTH])
 Y = tf.placeholder(tf.float32, [None, MAX_CAPTCHA * CHAR_SET_LEN])
 keep_prob = tf.placeholder(tf.float32)  # dropout
 
-
-
-
 def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
-    """
-    定义CNN
-    cnn在图像大小是2的倍数时性能最高, 如果你用的图像大小不是2的倍数，可以在图像边缘补无用像素。
-    np.pad(image,((2,3),(2,2)), 'constant', constant_values=(255,))  # 在图像上补2行，下补3行，左补2行，右补2行
-    """
 
     x = tf.reshape(X, shape=[-1, IMAGE_HEIGHT, IMAGE_WIDTH, 1])
 
-    #机器好的可以改为
-    #L1_NEU_NUM=256 
-    #L2_NEU_NUM=512
-    #L3_NEU_NUM=1024
-    #L4_NEU_NUM=2048
-    #CONV_CORE_SIZE=5
-    #NEU_LAYER_NUM=4
-    #FULL_LAYER_FEATURE_NUM=8192
-    
-    
-    
-    L1_NEU_NUM=64
-    L2_NEU_NUM=128
-    L3_NEU_NUM=256
+
+    L1_NEU_NUM=128
+    L2_NEU_NUM=256
+    L3_NEU_NUM=512
     L4_NEU_NUM=512
-    CONV_CORE_SIZE=5
-    NEU_LAYER_NUM=4
+    CONV_CORE_SIZE=3
+    MAX_POOL_NUM=3
     FULL_LAYER_FEATURE_NUM=1024
     w_c1 = tf.Variable(w_alpha * tf.random_normal([CONV_CORE_SIZE, CONV_CORE_SIZE, 1, L1_NEU_NUM]))
     b_c1 = tf.Variable(b_alpha * tf.random_normal([L1_NEU_NUM]))
@@ -63,9 +45,11 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
     conv4 = tf.nn.max_pool(conv4, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
     conv4 = tf.nn.dropout(conv4, keep_prob)
 
+
     # Fully connected layer
 
-    r=int(math.ceil(IMAGE_HEIGHT/(2**NEU_LAYER_NUM))*math.ceil(IMAGE_WIDTH/(2**NEU_LAYER_NUM))*L4_NEU_NUM)
+
+    r=int(math.ceil(IMAGE_HEIGHT/(2**MAX_POOL_NUM))*math.ceil(IMAGE_WIDTH/(2**MAX_POOL_NUM))*L4_NEU_NUM)
     w_d = tf.Variable(w_alpha * tf.random_normal([r, FULL_LAYER_FEATURE_NUM]))
     b_d = tf.Variable(b_alpha * tf.random_normal([FULL_LAYER_FEATURE_NUM]))
     dense = tf.reshape(conv4, [-1, w_d.get_shape().as_list()[0]])
@@ -75,5 +59,7 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
     w_out = tf.Variable(w_alpha * tf.random_normal([FULL_LAYER_FEATURE_NUM, MAX_CAPTCHA * CHAR_SET_LEN]))
     b_out = tf.Variable(b_alpha * tf.random_normal([MAX_CAPTCHA * CHAR_SET_LEN]))
     out = tf.add(tf.matmul(dense, w_out), b_out)  # 36*4
+    # out = tf.reshape(out, (CHAR_SET_LEN, MAX_CAPTCHA))  # 重新变成4,36的形状
+    # out = tf.nn.softmax(out)
     return out
 
