@@ -19,7 +19,7 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
     L3_NEU_NUM=512
     L4_NEU_NUM=512
     CONV_CORE_SIZE=3
-    MAX_POOL_NUM=3
+    MAX_POOL_NUM=4
     FULL_LAYER_FEATURE_NUM=1024
     w_c1 = tf.Variable(w_alpha * tf.random_normal([CONV_CORE_SIZE, CONV_CORE_SIZE, 1, L1_NEU_NUM]))
     b_c1 = tf.Variable(b_alpha * tf.random_normal([L1_NEU_NUM]))
@@ -59,7 +59,5 @@ def crack_captcha_cnn(w_alpha=0.01, b_alpha=0.1):
     w_out = tf.Variable(w_alpha * tf.random_normal([FULL_LAYER_FEATURE_NUM, MAX_CAPTCHA * CHAR_SET_LEN]))
     b_out = tf.Variable(b_alpha * tf.random_normal([MAX_CAPTCHA * CHAR_SET_LEN]))
     out = tf.add(tf.matmul(dense, w_out), b_out)  # 36*4
-    # out = tf.reshape(out, (CHAR_SET_LEN, MAX_CAPTCHA))  # 重新变成4,36的形状
-    # out = tf.nn.softmax(out)
     return out
 
