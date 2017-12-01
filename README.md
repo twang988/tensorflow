@@ -1,4 +1,6 @@
-# 目录：chinese_captcha_crack为普通多层CNN神经网络，captcha_crack_densenet为densenet网络，优点是特征更少，效率更高，模型更小。
+# 目录：chinese_captcha_crack为普通多层CNN神经网络
+# captcha_crack_densenet为densenet网络，优点是特征更少，效率更高，模型更小。
+
 # 中文验证码学习与破解
 # 训练目标是最大6字符不定长验证码，可根据自己需求进行修改
 #目录font 放英文字体，font2 放中文字体文件，可放多个字体文件，生成时会随机生成包含的字体。
